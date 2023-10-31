@@ -11,13 +11,15 @@
         }
     </style>
 </head>
-<body>
-    <div class="container mt-3 bg-dark" style="width: 450px;">
-        <h2 class="text-center fs-1s fw-bold mb-4 text-white">Bookmarks</h2>
-        <button id="saveBookmarkBtn" class="btn btn-light fs-1s fw-normal">Save Bookmark</button>
-        <button id="loginBtn" class="btn btn-light fs-1s fw-normal">Login</button>
-        <h2 id="a" class="text-center fs-1s fw-bold mb-4 text-white"></h2>
+<div class="container d-flex justify-content-center align-items-center bg-black" style="width: 220px;">
+    <div class="text-center">
+        <div class="d-flex justify-content-center gap-2 align-items-center mt-4">
+            <p class="fs-5 fw-bold text-white">Folder:</p>
+            <p id="folderName" class="fs-5 fw-normal text-white spinner-border spinner-border-sm"></p>
+        </div>
+        <button id="saveBookmarkBtn" class="fw-bold btn mb-4 btn-light disabled" style="width: 150px;">Save Bookmark</button>
     </div>
+</div>
 </body>
 <script src="script.js"></script>
 </html>

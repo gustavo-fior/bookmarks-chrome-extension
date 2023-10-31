@@ -4,12 +4,15 @@
   "description": "Save your bookmarks like a pro",
   "manifest_version": 3,
   "author": "Gustavo Fior",
-  "permissions": ["activeTab", "storage", "identity"],
+  "permissions": ["activeTab", "storage", "identity", "cookies"],
   "action": {
     "default_popup": "index.html",
     "default_title": "Bookmarks",
     "default_icon": "chrome_icon.png"
   },
+  "host_permissions": [
+    "*://*.gustavofior.com/"
+  ],
   "icons": {
     "16": "chrome_icon.png",
     "32": "chrome_icon.png",

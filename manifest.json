@@ -1,0 +1,19 @@
+{
+  "name": "Bookmarks",
+  "version": "1.0.0",
+  "description": "Save your bookmarks like a pro",
+  "manifest_version": 3,
+  "author": "Gustavo Fior",
+  "permissions": ["activeTab", "storage", "identity"],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Bookmarks",
+    "default_icon": "chrome_icon.png"
+  },
+  "icons": {
+    "16": "chrome_icon.png",
+    "32": "chrome_icon.png",
+    "48": "chrome_icon.png",
+    "128": "chrome_icon.png"
+  }
+}

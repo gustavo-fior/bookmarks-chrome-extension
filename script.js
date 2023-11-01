@@ -10,8 +10,7 @@ document
 
         document.getElementById("saveBookmarkBtn").classList.add("disabled");
         document.getElementById("saveBookmarkBtn").innerHTML =
-            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-
+          '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 
         fetch(
           "https://bookmarks.gustavofior.com/api/trpc/bookmarks.create?batch=1",
@@ -32,13 +31,16 @@ document
         )
           .then((response) => response.json())
           .then((data) => {
-              document.getElementById("saveBookmarkBtn").innerHTML = data[0].result.data.json.title.split(" ")[0] + " saved!";
-              setTimeout(() => {
-                  document.getElementById("saveBookmarkBtn").innerHTML = "Save";
-                }, 2000);
-                document.getElementById("saveBookmarkBtn").classList.remove("disabled");
-            });
-        }
+            document.getElementById("saveBookmarkBtn").innerHTML =
+              data[0].result.data.json.title.split(" ")[0] + " saved!";
+            setTimeout(() => {
+              document.getElementById("saveBookmarkBtn").innerHTML = "Save";
+            }, 2000);
+            document
+              .getElementById("saveBookmarkBtn")
+              .classList.remove("disabled");
+          });
+      }
     );
   });
 
@@ -69,11 +71,19 @@ chrome.cookies.getAll({}, function (cookies) {
       )
         .then((response) => response.json())
         .then((data) => {
-            document.getElementById("folderName").classList.remove("spinner-border");
-            document.getElementById("folderName").classList.remove("spinner-border-sm");
-            document.getElementById("saveBookmarkBtn").classList.remove("disabled");
+          document
+            .getElementById("folderName")
+            .classList.remove("spinner-border");
+          document
+            .getElementById("folderName")
+            .classList.remove("spinner-border-sm");
+          document
+            .getElementById("saveBookmarkBtn")
+            .classList.remove("disabled");
 
           document.getElementById("folderName").innerHTML =
+            data[1].result.data.json[0].icon +
+            " " +
             data[1].result.data.json[0].name;
 
           currentFolderid = data[1].result.data.json[0].id;

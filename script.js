@@ -10,7 +10,7 @@ document
 
         document.getElementById("saveBookmarkBtn").classList.add("disabled");
         document.getElementById("saveBookmarkBtn").innerHTML =
-          '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+          '<span class="spinner-border spinner-border-sm"></span>';
 
         fetch(
           "https://bookmarks.gustavofior.com/api/trpc/bookmarks.create?batch=1",
@@ -32,9 +32,11 @@ document
           .then((response) => response.json())
           .then((data) => {
             document.getElementById("saveBookmarkBtn").innerHTML =
-              data[0].result.data.json.title.split(" ")[0] + " saved!";
+              `<span class="animate__animated animate__fadeIn">✔️</span>`;
             setTimeout(() => {
-              document.getElementById("saveBookmarkBtn").innerHTML = "Save";
+              document.getElementById(
+                "saveBookmarkBtn"
+              ).innerHTML = `<span class="animate__animated animate__fadeIn">Save</span>`;
             }, 2000);
             document
               .getElementById("saveBookmarkBtn")
@@ -71,22 +73,39 @@ chrome.cookies.getAll({}, function (cookies) {
       )
         .then((response) => response.json())
         .then((data) => {
-          document
-            .getElementById("folderName")
-            .classList.remove("spinner-border");
-          document
-            .getElementById("folderName")
-            .classList.remove("spinner-border-sm");
-          document
-            .getElementById("saveBookmarkBtn")
-            .classList.remove("disabled");
+          const folderSelect = document.getElementById("folderSelect");
 
-          document.getElementById("folderName").innerHTML =
-            data[1].result.data.json[0].icon +
-            " " +
-            data[1].result.data.json[0].name;
+          const saveBtn = document.getElementById("saveBookmarkBtn");
+          saveBtn.classList.remove("disabled");
+
+          saveBtn.innerHTML = `<span class="animate__animated animate__fadeIn">Save</span>`;
+
+          // Remove the spinner option
+          const spinnerOption = folderSelect.querySelector("#spinnerOption");
+          if (spinnerOption) {
+            folderSelect.removeChild(spinnerOption);
+          }
+
+          data[1].result.data.json.forEach((folder) => {
+            const option = document.createElement("option");
+            option.text = folder.icon + " " + folder.name;
+            option.value = folder.id;
+            option.classList.add("select-option");
+            folderSelect.add(option);
+          });
 
           currentFolderid = data[1].result.data.json[0].id;
+
+          folderSelect.addEventListener("change", function () {
+            currentFolderid = folderSelect.value;
+          });
         });
     });
 });
+
+// Add the spinner option while the folders are loading
+const folderSelect = document.getElementById("folderSelect");
+const spinnerOption = document.createElement("option");
+spinnerOption.id = "spinnerOption";
+spinnerOption.text = "Loading...";
+folderSelect.add(spinnerOption);

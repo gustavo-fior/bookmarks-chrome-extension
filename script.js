@@ -31,8 +31,9 @@ document
         )
           .then((response) => response.json())
           .then((data) => {
-            document.getElementById("saveBookmarkBtn").innerHTML =
-              `<span class="animate__animated animate__fadeIn">✔️</span>`;
+            document.getElementById(
+              "saveBookmarkBtn"
+            ).innerHTML = `<span class="animate__animated animate__fadeIn">✔️</span>`;
             setTimeout(() => {
               document.getElementById(
                 "saveBookmarkBtn"
@@ -47,60 +48,77 @@ document
   });
 
 chrome.cookies.getAll({}, function (cookies) {
-  fetch("https://bookmarks.gustavofior.com/api/auth/session", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": cookies.filter(
-        (cookie) => cookie.name === "__Host-next-auth.csrf-token"
-      )[0].value,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const userId = data.user.id;
+  try {
+    fetch("https://bookmarks.gustavofior.com/api/auth/session", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": cookies.filter(
+          (cookie) => cookie.name === "__Host-next-auth.csrf-token"
+        )[0].value,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.user) {
+          const userId = data.user.id;
 
-      fetch(
-        `https://bookmarks.gustavofior.com/api/trpc/users.findByUserId,folders.findByUserId?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%2C%221%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%7D
+          fetch(
+            `https://bookmarks.gustavofior.com/api/trpc/users.findByUserId,folders.findByUserId?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%2C%221%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%7D
         `,
-        {
-          headers: {
-            "X-CSRFToken": cookies.filter(
-              (cookie) => cookie.name === "__Host-next-auth.csrf-token"
-            )[0].value,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const folderSelect = document.getElementById("folderSelect");
+            {
+              headers: {
+                "X-CSRFToken": cookies.filter(
+                  (cookie) => cookie.name === "__Host-next-auth.csrf-token"
+                )[0].value,
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const folderSelect = document.getElementById("folderSelect");
 
+              const saveBtn = document.getElementById("saveBookmarkBtn");
+              saveBtn.classList.remove("disabled");
+
+              saveBtn.innerHTML = `<span class="animate__animated animate__fadeIn">Save</span>`;
+
+              // Remove the spinner option
+              const spinnerOption =
+                folderSelect.querySelector("#spinnerOption");
+              if (spinnerOption) {
+                folderSelect.removeChild(spinnerOption);
+              }
+
+              data[1].result.data.json.forEach((folder) => {
+                const option = document.createElement("option");
+                option.text = folder.icon + " " + folder.name;
+                option.value = folder.id;
+                option.classList.add("select-option");
+                folderSelect.add(option);
+              });
+
+              currentFolderid = data[1].result.data.json[0].id;
+
+              folderSelect.addEventListener("change", function () {
+                currentFolderid = folderSelect.value;
+              });
+            });
+        } else {
           const saveBtn = document.getElementById("saveBookmarkBtn");
           saveBtn.classList.remove("disabled");
+          saveBtn.innerHTML = `<a href="https://bookmarks.gustavofior.com" target="_blank" style="text-decoration: none; color: black;"
+        ><span class="animate__animated animate__fadeIn">Log in</span></a>`;
+        }
+      });
+  } catch (error) {
+    console.log(error);
 
-          saveBtn.innerHTML = `<span class="animate__animated animate__fadeIn">Save</span>`;
-
-          // Remove the spinner option
-          const spinnerOption = folderSelect.querySelector("#spinnerOption");
-          if (spinnerOption) {
-            folderSelect.removeChild(spinnerOption);
-          }
-
-          data[1].result.data.json.forEach((folder) => {
-            const option = document.createElement("option");
-            option.text = folder.icon + " " + folder.name;
-            option.value = folder.id;
-            option.classList.add("select-option");
-            folderSelect.add(option);
-          });
-
-          currentFolderid = data[1].result.data.json[0].id;
-
-          folderSelect.addEventListener("change", function () {
-            currentFolderid = folderSelect.value;
-          });
-        });
-    });
+    const saveBtn = document.getElementById("saveBookmarkBtn");
+    saveBtn.classList.remove("disabled");
+    saveBtn.innerHTML = `<a href="https://bookmarks.gustavofior.com" target="_blank" style="text-decoration: none; color: black;"
+    ><span class="animate__animated animate__fadeIn">Log in</span></a>`;
+  }
 });
 
 // Add the spinner option while the folders are loading

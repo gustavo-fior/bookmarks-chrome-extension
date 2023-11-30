@@ -31,9 +31,24 @@ document
         )
           .then((response) => response.json())
           .then((data) => {
-            document.getElementById(
-              "saveBookmarkBtn"
-            ).innerHTML = `<span class="animate__animated animate__fadeIn">✔️</span>`;
+            console.log(data);
+
+            if (
+              data[0].result.data.json.message === "Bookmark already exists"
+            ) {
+              document.getElementById(
+                "saveBookmarkBtn"
+              ).innerHTML = `<span class="animate__animated animate__fadeIn">❌ Duplicate</span>`;
+            } else if (data[0].result.data.json.name === "Error") {
+              document.getElementById(
+                "saveBookmarkBtn"
+              ).innerHTML = `<span class="animate__animated animate__fadeIn">❌ Error</span>`;
+            } else {
+              document.getElementById(
+                "saveBookmarkBtn"
+              ).innerHTML = `<span class="animate__animated animate__fadeIn">✔️</span>`;
+            }
+
             setTimeout(() => {
               document.getElementById(
                 "saveBookmarkBtn"

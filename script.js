@@ -13,7 +13,7 @@ document
           '<span class="spinner-border spinner-border-sm"></span>';
 
         fetch(
-          "https://bookmarks.gustavofior.com/api/trpc/bookmarks.create?batch=1",
+          "https://www.vayo.cc/api/trpc/bookmarks.create?batch=1",
           {
             method: "POST",
             headers: {
@@ -47,7 +47,7 @@ document
   });
 
 chrome.cookies.getAll({}, function (cookies) {
-  fetch("https://bookmarks.gustavofior.com/api/auth/session", {
+  fetch("https://www.vayo.cc/api/auth/session", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +61,7 @@ chrome.cookies.getAll({}, function (cookies) {
       const userId = data.user.id;
 
       fetch(
-        `https://bookmarks.gustavofior.com/api/trpc/users.findByUserId,folders.findByUserId?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%2C%221%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%7D
+        `https://www.vayo.cc/api/trpc/users.findByUserId,folders.findByUserId?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%2C%221%22%3A%7B%22json%22%3A%7B%22userId%22%3A%22${userId}%22%7D%7D%7D
         `,
         {
           headers: {

@@ -122,7 +122,7 @@ chrome.cookies.getAll({}, function (cookies) {
         } else {
           const saveBtn = document.getElementById("saveBookmarkBtn");
           saveBtn.classList.remove("disabled");
-          saveBtn.innerHTML = `<a href="www.vayo.cc" target="_blank" style="text-decoration: none; color: black;"
+          saveBtn.innerHTML = `<a href="https://www.vayo.cc" target="_blank" style="text-decoration: none; color: black;"
         ><span class="animate__animated animate__fadeIn">Log in</span></a>`;
         }
       });
@@ -131,7 +131,7 @@ chrome.cookies.getAll({}, function (cookies) {
 
     const saveBtn = document.getElementById("saveBookmarkBtn");
     saveBtn.classList.remove("disabled");
-    saveBtn.innerHTML = `<a href="www.vayo.cc" target="_blank" style="text-decoration: none; color: black;"
+    saveBtn.innerHTML = `<a href="https://www.vayo.cc" target="_blank" style="text-decoration: none; color: black;"
     ><span class="animate__animated animate__fadeIn">Log in</span></a>`;
   }
 });

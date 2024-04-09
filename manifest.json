@@ -1,18 +1,16 @@
 {
-  "name": "Bookmarks",
-  "version": "1.0.3",
-  "description": "Save your bookmarks like a pro",
+  "name": "Vayo",
+  "version": "1.0.4",
+  "description": "Save your links like a pro",
   "manifest_version": 3,
   "author": "Gustavo Fior",
   "permissions": ["activeTab", "cookies"],
   "action": {
     "default_popup": "index.html",
-    "default_title": "Bookmarks",
+    "default_title": "Vayo",
     "default_icon": "chrome_icon.png"
   },
   "host_permissions": [
-    "*://*.gustavofior.com/",
-    "*://vayo.cc/",
     "*://www.vayo.cc/"
   ],
   "icons": {

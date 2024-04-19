@@ -31,10 +31,8 @@ document
         )
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-
             if (
-              data[0].result.data.json.message === "Bookmark already exists"
+              data[0].error.json.message === "Bookmark already exists"
             ) {
               document.getElementById(
                 "saveBookmarkBtn"

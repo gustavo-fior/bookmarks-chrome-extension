@@ -32,12 +32,12 @@ document
           .then((response) => response.json())
           .then((data) => {
             if (
-              data[0].error.json.message === "Bookmark already exists"
+              data[0].error !== undefined && data[0].error.json.message === "Bookmark already exists"
             ) {
               document.getElementById(
                 "saveBookmarkBtn"
               ).innerHTML = `<span class="animate__animated animate__fadeIn">❌ Duplicate</span>`;
-            } else if (data[0].result.data.json.name === "Error") {
+            } else if (data[0].error !== undefined ) {
               document.getElementById(
                 "saveBookmarkBtn"
               ).innerHTML = `<span class="animate__animated animate__fadeIn">❌ Error</span>`;
@@ -46,6 +46,8 @@ document
                 "saveBookmarkBtn"
               ).innerHTML = `<span class="animate__animated animate__fadeIn">✔️</span>`;
             }
+
+            console.log(data);
 
             setTimeout(() => {
               document.getElementById(
